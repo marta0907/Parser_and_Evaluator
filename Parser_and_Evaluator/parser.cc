@@ -74,22 +74,20 @@ TreeNode* FormulaParser::parseTerm() {
 
 
 TreeNode* FormulaParser::getTreeRoot() {
-    // your code starts here
     return parseFormula();
 }
 
 FormulaParser::~FormulaParser() {
-    // your code starts here
+    delete tknzr;
 }
 
 AssignmentParser::AssignmentParser(std::string ln) : tknzr{ new Tokenizer{ln} } {}
 
 std::map<std::string, bool> AssignmentParser::parseAssignment() {
     std::map<std::string, bool> results;
-    // your code starts here
     return results;
 }
 
 AssignmentParser::~AssignmentParser() {
-    // your code starts here
+    delete tknzr;
 }
