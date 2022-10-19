@@ -2,7 +2,6 @@
 
 
 Tokenizer::Tokenizer(std::string ln) {
-    // complete the constructor
     this->expression = ln;
     this->index = 0;
 }

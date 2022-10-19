@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include <sstream>  
 #include <vector>
 #include <exception>
@@ -59,8 +57,7 @@ int contains_symbol(const std::string& line, char symbol) {
 	return count;
 }
 
-void split_str(std::string const& str, const char delim, std::vector <std::string>& out)
-{
+void split_str(std::string const& str, const char delim, std::vector <std::string>& out){
 	std::stringstream s(str);
 	std::string s2;
 	while (std::getline(s, s2, delim))

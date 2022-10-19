@@ -14,12 +14,12 @@ class Tokenizer;
 class FormulaParser {
     Tokenizer* tknzr;
     Token currentToken;
-    TreeNode* parseFormula(); // parse non-terminal Formula in the grammar
-    TreeNode* parseConjTerm(); // parse non-terminal ConjTerm in the grammar
-    TreeNode* parseTerm(); // parse non-terminal Term in the grammar
+    TreeNode* parseFormula(); 
+    TreeNode* parseConjTerm(); 
+    TreeNode* parseTerm(); 
 public:
     FormulaParser(std::string ln);
-    TreeNode* getTreeRoot(); // parse the Boolean formula and return the root node of the formula syntax tree
+    TreeNode* getTreeRoot(); 
     ~FormulaParser();
 };
 
