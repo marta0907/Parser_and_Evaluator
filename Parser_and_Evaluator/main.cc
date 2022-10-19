@@ -1,42 +1,46 @@
 #include <iostream>
-#include <map>
 #include <string>
 #include <sstream>  
 #include <vector>
+#include <exception>
 #include "treeNode.h"
 #include "parser.h"
-#include "tokenizer.h"
 
-std::string remove_spaces(std::string input); 
+void remove_spaces(std::string& input); 
 int contains_symbol(const std::string& line, char symbol);
 void parse_line(const std::string& line, std::string& formulaStr, std::string& assignmentStr);
 void split_str(std::string const& str, const char delim, std::vector <std::string>& out);
 
 int main() {
-	/*std::string line = ";";
-	std::string formulaStr, assignmentStr;
-	parse_line(line, formulaStr, assignmentStr);
-	std::cout <<"formula " << formulaStr << std::endl;
-	std::cout <<"assignment "<< assignmentStr << std::endl;*/
-	AssignmentParser ap("B:0");
-	std::map<std::string, bool> map = ap.parseAssignment();
-
-	FormulaParser fp("1+1");
-	TreeNode* root = fp.getTreeRoot();
-	bool res = root->evaluate(map);
-	std::cout << res;
+	
+	std::string line; 
+	std::string formulaStr; 
+	std::string assignmentStr;
+	while (getline(std::cin, line)) {
+		try {
+			remove_spaces(line);
+			parse_line(line, formulaStr, assignmentStr);
+			AssignmentParser ap(assignmentStr);
+			FormulaParser fp(formulaStr);
+			TreeNode* root = fp.getTreeRoot();
+			std::map<std::string, bool> map = ap.parseAssignment();
+			bool res = root->evaluate(map);
+			std::cout << res<<std::endl;
+		}
+		catch (const std::exception& e) {
+			std::cout << e.what() << std::endl;
+		}
+	}
 }
 
-std::string remove_spaces(std::string input) {
+void remove_spaces(std::string& input) {
 	input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
-	return input;
 }
 
 void parse_line(const std::string& line, std::string& formulaStr, std::string& assignmentStr) {
 	char delimiter = ';';
 	if (contains_symbol(line, delimiter) != 1) {
-		//throw exeption
-		std::cout << "exeption" << std::endl;
+		throw std::runtime_error("Error: invalid input");
 	}
 	else {
 		std::vector<std::string> vector;

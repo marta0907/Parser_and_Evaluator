@@ -16,9 +16,19 @@ bool Tokenizer::advanceToken(std::string ln) {
 
 bool Tokenizer::hasToken() const {
     return index < expression.length();
-} // not sure about that method
+}
 
-// only can be called when hasToken() is true  (something useful???)
+void Tokenizer::validateStr(std::string str) {
+    if(str.length()>10)
+        throw std::runtime_error("Error: invalid input");
+    char array[] = { '0','1','2','3','4','5','6','7','8','9' };
+    for (auto c : array) {
+        if(c == str[0])
+            throw std::runtime_error("Error: invalid input");
+    }
+
+}
+
 Token Tokenizer::getToken() {
     Token resultToken;
     std::string str;
@@ -38,6 +48,7 @@ Token Tokenizer::getToken() {
         case(','):
         case(':'): {
             if (str.size() > 0) {
+                validateStr(str);
                 resultToken.content = str;
                 resultToken.type = Variable;
                 return resultToken;
@@ -69,6 +80,7 @@ Token Tokenizer::getToken() {
         }
     }
     if (str.size() > 0) {
+        validateStr(str);
         resultToken.content = str.data();
         resultToken.type = Variable;
     }

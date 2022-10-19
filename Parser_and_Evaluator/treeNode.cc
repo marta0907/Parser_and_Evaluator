@@ -55,13 +55,10 @@ bool ConstantNode::evaluate(const std::map<std::string, bool>& assignment) const
 VariableNode::VariableNode(std::string cntt) : TreeNode{ cntt } {}
 
 bool VariableNode::evaluate(const std::map<std::string, bool>& assignment) const {
-    if (assignment.count(this->getContent())) {
-        return assignment.at(this->getContent());
+    if (!assignment.count(this->getContent())) {
+        throw std::runtime_error("Error: incomplete assignment");
     }
-    else {
-        std::cout << "incomplete assignment";
-        return 0;
-    }
+     return assignment.at(this->getContent());
 }
 
 

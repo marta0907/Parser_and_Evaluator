@@ -1,7 +1,6 @@
 #include "parser.h"
 #include "treeNode.h"
 #include "tokenizer.h"
-#include <iostream>  
 
 
 FormulaParser::FormulaParser(std::string ln) : tknzr{ new Tokenizer{ln} } {}
@@ -10,25 +9,22 @@ TreeNode* FormulaParser::parseFormula() {
     TreeNode* resultToken = parseConjTerm();
     while (tknzr->advanceToken("+"))
     {
-        currentToken = tknzr->getToken();     
+        currentToken = tknzr->getToken();
         TreeNode* a = resultToken;
         TreeNode* b = parseConjTerm();
         resultToken = new OperatorNode("+");
         resultToken->updateChildren(a, b);
     }
-    if (tknzr->hasToken()) {
-        //exeption
-    }
     return resultToken;
 }
 
 TreeNode* FormulaParser::parseConjTerm() {
-    TreeNode* resultToken = parseTerm();
+    TreeNode* resultToken =  parseTerm();
     while (tknzr->advanceToken("*"))
     {
         currentToken = tknzr->getToken();
         TreeNode* a = resultToken;
-        TreeNode* b = parseConjTerm();
+        TreeNode* b = parseTerm();
         resultToken = new OperatorNode("*");
         resultToken->updateChildren(a, b);
     }
@@ -40,6 +36,7 @@ TreeNode* FormulaParser::parseTerm() {
     if (tknzr->hasToken()) {
         currentToken = tknzr->getToken();
         if (currentToken.type == Variable) {
+
             resultNode = new VariableNode(currentToken.content);
         }
         else if (currentToken.type == Constant) {
@@ -56,15 +53,15 @@ TreeNode* FormulaParser::parseTerm() {
                 if (tknzr->hasToken()) {
                     currentToken = tknzr->getToken();
                     if (currentToken.content != ")") {
-                        //return error incorrect formula
+                        throw std::runtime_error("Error: invalid input");
                     }
                 }
                 else {
-                    //return error incorrect formula
+                    throw std::runtime_error("Error: invalid input");
                 }
             }
             else {
-                //return error incorrect formula
+                throw std::runtime_error("Error: invalid input");
             }
         }
     }
@@ -72,7 +69,11 @@ TreeNode* FormulaParser::parseTerm() {
 }
 
 TreeNode* FormulaParser::getTreeRoot() {
-    return parseFormula();
+    TreeNode* root = parseFormula();
+    if (tknzr->hasToken()) {
+        throw std::runtime_error("Error: invalid input");
+    }
+    return root;
 }
 
 FormulaParser::~FormulaParser() {
@@ -100,7 +101,7 @@ void AssignmentParser::parsePair(std::map<std::string, bool>& results) {
             parseConstant(results, varName);
         }
         else {
-            std::cout << "Error: invalid input";
+            throw std::runtime_error("Error: invalid input");
         }
     }
 }
@@ -110,15 +111,14 @@ void AssignmentParser::parseConstant(std::map<std::string, bool>& results, std::
         currentToken = tknzr->getToken();
         bool value = currentToken.content == "1";
         if (results.count(varName) && results[varName] != value) {
-            std::cout << "Error: contradicting assignment";
-            //contradicting exeption
+            throw std::runtime_error("Error: contradicting assignment");
         }
         else {
             results.insert({ varName,value });
         }
     }
     else {
-        std::cout << "Error: invalid input";
+        throw std::runtime_error("Error: invalid input");
     }
 }
 
