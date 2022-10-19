@@ -13,11 +13,18 @@ void parse_line(const std::string& line, std::string& formulaStr, std::string& a
 void split_str(std::string const& str, const char delim, std::vector <std::string>& out);
 
 int main() {
-	std::string line = ";wwwww";
+	/*std::string line = ";";
 	std::string formulaStr, assignmentStr;
 	parse_line(line, formulaStr, assignmentStr);
 	std::cout <<"formula " << formulaStr << std::endl;
-	std::cout <<"assignment "<< assignmentStr << std::endl;
+	std::cout <<"assignment "<< assignmentStr << std::endl;*/
+	AssignmentParser ap("B:0");
+	std::map<std::string, bool> map = ap.parseAssignment();
+
+	FormulaParser fp("1+1");
+	TreeNode* root = fp.getTreeRoot();
+	bool res = root->evaluate(map);
+	std::cout << res;
 }
 
 std::string remove_spaces(std::string input) {

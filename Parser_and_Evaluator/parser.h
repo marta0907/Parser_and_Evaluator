@@ -25,6 +25,9 @@ public:
 // Parser for the Assignment
 class AssignmentParser {
     Tokenizer* tknzr;
+    Token currentToken;
+    void parsePair(std::map<std::string, bool>& map);
+    void parseConstant(std::map<std::string, bool>& map, std::string varName);
 public:
     AssignmentParser(std::string ln);
     std::map<std::string, bool> parseAssignment();
