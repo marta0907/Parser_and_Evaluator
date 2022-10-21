@@ -24,6 +24,7 @@ int main() {
 			std::map<std::string, bool> map = ap.parseAssignment();
 			bool res = root->evaluate(map);
 			std::cout << res<<std::endl;
+			delete root;
 		}
 		catch (const std::exception& e) {
 			std::cout << e.what() << std::endl;

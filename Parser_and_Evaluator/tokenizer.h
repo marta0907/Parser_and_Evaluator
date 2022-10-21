@@ -2,7 +2,8 @@
 #define TOKENIZER_H
 
 #include <string>
-#include <iostream>  
+#include <iostream> 
+#include <cctype> 
 
 enum TokenType {
     Constant,

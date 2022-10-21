@@ -1,4 +1,3 @@
-#include <iostream>
 #include "treeNode.h"
 
 TreeNode::TreeNode(std::string cntt) : content{ cntt } {}

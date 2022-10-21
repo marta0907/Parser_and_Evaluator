@@ -18,14 +18,8 @@ bool Tokenizer::hasToken() const {
 }
 
 void Tokenizer::validateStr(std::string str) {
-    if(str.length()>10)
+    if(str.length()>10 or std::isdigit(str[0]))
         throw std::runtime_error("Error: invalid input");
-    char array[] = { '0','1','2','3','4','5','6','7','8','9' };
-    for (auto c : array) {
-        if(c == str[0])
-            throw std::runtime_error("Error: invalid input");
-    }
-
 }
 
 Token Tokenizer::getToken() {

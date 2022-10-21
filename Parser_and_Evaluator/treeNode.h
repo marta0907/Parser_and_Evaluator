@@ -2,6 +2,7 @@
 #define TNODE_H
 
 #include <sstream>
+#include <iostream>
 #include <string>
 #include <map>
 

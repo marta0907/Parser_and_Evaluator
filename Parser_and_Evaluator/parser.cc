@@ -1,6 +1,5 @@
 #include "parser.h"
 #include "treeNode.h"
-#include "tokenizer.h"
 
 
 FormulaParser::FormulaParser(std::string ln) : tknzr{ new Tokenizer{ln} } {}
