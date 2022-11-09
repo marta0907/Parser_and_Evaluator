@@ -8,6 +8,10 @@ Tokenizer::Tokenizer(std::string ln) {
 
 bool Tokenizer::advanceToken(std::string ln) {
     for (int i = 0; i < ln.length(); i++) {
+        if (i == 0)
+            while (expression[index + i] == ' ') {
+                index++;
+            }
         if (ln[i] != expression[index + i]) return false;
     }
     return true;
@@ -30,6 +34,12 @@ Token Tokenizer::getToken() {
         switch (c)
         {
         case(' '): {
+            if (str.size() > 0) {
+                validateStr(str);
+                resultToken.content = str;
+                resultToken.type = Variable;
+                return resultToken;
+            };
             index++;
             break;
         }

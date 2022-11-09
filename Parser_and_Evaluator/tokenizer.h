@@ -9,13 +9,14 @@ enum TokenType {
     Constant,
     Variable,
     Operator,
-    Symbol
+    Symbol,
+    None
 };
 
 struct Token
 {
     std::string content;
-    TokenType type;
+    TokenType type = None;
 };
 
 class Tokenizer

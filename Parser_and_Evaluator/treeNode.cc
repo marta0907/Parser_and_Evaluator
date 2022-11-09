@@ -26,12 +26,16 @@ OperatorNode::OperatorNode(std::string cntt) : TreeNode{ cntt } {}
 
 bool OperatorNode::evaluate(const std::map<std::string, bool>& assignment) const {
     if (this->getContent() == "+") {
-        return this->getLeftChild()->evaluate(assignment)
-            || this->getRightChild()->evaluate(assignment);
+        bool leftRes = this->getLeftChild()->evaluate(assignment);
+        bool rightRes = this->getRightChild()->evaluate(assignment);
+        return leftRes
+            || rightRes;
     }
     else if (this->getContent() == "*") {
-        return this->getLeftChild()->evaluate(assignment)
-            && this->getRightChild()->evaluate(assignment);
+        bool leftRes = this->getLeftChild()->evaluate(assignment);
+        bool rightRes = this->getRightChild()->evaluate(assignment);
+        return leftRes
+            && rightRes;
     }
     else if (this->getContent() == "-") {
         return !this->getLeftChild()->evaluate(assignment);
